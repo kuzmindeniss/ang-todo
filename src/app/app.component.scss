@@ -1,0 +1,12 @@
+.wrapper {
+    min-height: 100vh;
+    background-color:#99fffd;
+    background-image:
+        radial-gradient(at 15% 7%, hsla(109,75%,78%,1) 0px, transparent 50%),
+        radial-gradient(at 17% 73%, hsla(205,86%,70%,1) 0px, transparent 50%),
+        radial-gradient(at 14% 8%, hsla(278,77%,68%,1) 0px, transparent 50%),
+        radial-gradient(at 67% 17%, hsla(260,67%,75%,1) 0px, transparent 50%),
+        radial-gradient(at 47% 6%, hsla(115,87%,66%,1) 0px, transparent 50%),
+        radial-gradient(at 90% 6%, hsla(275,85%,62%,1) 0px, transparent 50%),
+        radial-gradient(at 82% 5%, hsla(318,68%,61%,1) 0px, transparent 50%);
+}
