@@ -1,5 +1,8 @@
 .wrapper {
+    display: flex;
+    flex-flow: row;
     min-height: 100vh;
+    gap: 24px;
     height: 100vh;
     padding: 24px;
     background-color:#99fffd;
@@ -11,4 +14,8 @@
         radial-gradient(at 47% 6%, hsla(115,87%,66%,1) 0px, transparent 50%),
         radial-gradient(at 90% 6%, hsla(275,85%,62%,1) 0px, transparent 50%),
         radial-gradient(at 82% 5%, hsla(318,68%,61%,1) 0px, transparent 50%);
+}
+
+.right-wrapper {
+    flex-grow: 1;
 }
