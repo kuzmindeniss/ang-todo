@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Colors } from "src/types";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ang-todo';
+  str = Colors;
+
+  ngOnInit() {
+  }
 }
