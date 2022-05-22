@@ -8,8 +8,21 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
+import { initializeApp } from 'firebase/app';
+import { getAuth } from "firebase/auth";
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
+  const firebaseConfig = {
+    apiKey: "AIzaSyCCJvYJXNoK7UInqcfSHZURUXHD4uyVx_s",
+    authDomain: "angtodo-3da1e.firebaseapp.com",
+    projectId: "angtodo-3da1e",
+    storageBucket: "angtodo-3da1e.appspot.com",
+    messagingSenderId: "195589931087",
+    appId: "1:195589931087:web:f2adf0b4a5c30587936a3a",
+    measurementId: "G-FJY436RDSH"
+  };
+
   const server = express();
   const distFolder = join(process.cwd(), 'dist/ang-todo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
@@ -22,10 +35,13 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  
   // Example Express Rest API endpoints
   server.get('/api/**', (req, res) => {
-    res.status(404).send('data requests are not yet supported');
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+
+    res.status(404).send(JSON.stringify(auth));
   });
 
   // Serve static files from /browser
