@@ -5,11 +5,20 @@
             <li><a href="#">
                     <div class="left-menu__item-color"></div>
                     List films
-                </a></li>
+                </a>
+            </li>
             <li><a href="#">
                     <div class="left-menu__item-color"></div>
                     Vuejs keyboard trainer
-                </a></li>
+                </a>
+            </li>
         </ul>
+        <button class="button create-project-button" (click)="modalService.open('custom-modal-1');" >Create project</button>
     </section>
 </div>
+
+<jw-modal id="custom-modal-1">
+    <h1>A Custom Modal!</h1>
+    <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p>
+    <button (click)="modalService.close('custom-modal-1');">Close</button>
+</jw-modal>

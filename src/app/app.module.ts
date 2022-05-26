@@ -14,6 +14,9 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth.service';
+import { ProjectService } from './project.service';
+import { ModalModule } from './_modal';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,8 @@ import { AuthService } from './auth.service';
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
+    ModalModule,
+    FormsModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
@@ -32,7 +37,10 @@ import { AuthService } from './auth.service';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    ProjectService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

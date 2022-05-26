@@ -2,16 +2,16 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { initializeApp } from 'firebase/app';
 import * as auth from 'firebase/auth';
-import { environment } from "src/environments/environment";
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userData: any;
+  userData: firebase.default.User | null = JSON.parse(localStorage.getItem('user')!);
+  userData$ = new BehaviorSubject<typeof this.userData>(this.userData);
 
   constructor(
     public afs: AngularFirestore,
@@ -21,16 +21,21 @@ export class AuthService {
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
+        localStorage.setItem('user', JSON.stringify(user));
         JSON.parse(localStorage.getItem('user')!);
-        console.log('Logged!');
-        console.log(user);
       } else {
         localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
       }
+      
+      this.updateUserData$(user);
     });
+  }
+
+  updateUserData$(newUser: typeof this.userData) {
+    if (newUser == this.userData) return;
+    if (newUser && this.userData && newUser.uid == this.userData.uid) return;
+    this.userData = newUser;
+    this.userData$.next(newUser);
   }
 
   googleAuth() {
@@ -38,15 +43,11 @@ export class AuthService {
       .then((result) => {
         this.setUserData(result.user);
       }).catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = auth.GoogleAuthProvider.credentialFromError(error);
         window.alert(errorMessage);
-        // ...
       });
   }
 
@@ -69,6 +70,18 @@ export class AuthService {
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
     return (user !== null && user.emailVerified !== false) ? true : false;
+  }
+
+  get userUid(): string | null {
+    return this.userData ? this.userData.uid : null;
+  }
+
+  get isUserExists(): boolean {
+    return (this.userData && this.userData.uid) ? true : false;
+  }
+
+  get userId(): string | null {
+    return this.isUserExists ? this.userData!.uid : null;
   }
   
   signOut() {

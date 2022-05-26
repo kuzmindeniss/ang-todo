@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-top-panel',
@@ -8,7 +9,9 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class TopPanelComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  constructor(
+    public authService: AuthService
+  ) { }
 
   ngOnInit(): void {
   }

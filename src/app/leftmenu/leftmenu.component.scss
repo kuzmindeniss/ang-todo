@@ -31,6 +31,13 @@
 }
 
 .left-menu__list {
+    display: flex;
+    flex-direction: column;
+
+    ul {
+        margin-bottom: 12px;
+    }
+
     a {
         display: flex;
         align-items: center;
@@ -43,4 +50,10 @@
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
         }
     }
+}
+
+.create-project-button {
+    display: flex;
+    justify-self: stretch;
+    justify-content: center;
 }
