@@ -34,4 +34,14 @@ ul {
         background: rgba(255, 255, 255, 0.3);
         box-shadow: none;
     }
+
+    &--untouched {
+        cursor:auto;
+
+        &:hover {
+            background: inherit;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+    }
 }

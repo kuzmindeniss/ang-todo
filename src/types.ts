@@ -25,3 +25,11 @@ export enum Colors {
     grey = "rgb(184, 184, 184)",
     taupe = "rgb(204, 172, 147)"
 }
+
+export interface User {
+    uid: string;
+    email: string;
+    displayName: string;
+    photoURL: string;
+    emailVerified: boolean;
+ }

@@ -1,4 +1,10 @@
 <div class="top-panel-wrapper">
-    <button class="button">Login</button>
-    <button class="button">Register</button>
+    <ng-template [ngIf]="!authService.isLoggedIn" [ngIfElse]="signOut">
+        <button class="button" (click)="authService.googleAuth()">Login</button>
+        <button class="button">Register</button>
+    </ng-template>
+    <ng-template #signOut>
+        <button *ngIf="authService.userData && authService.userData.email" class="button button--untouched">{{ authService.userData.email }}</button>
+        <button class="button" (click)="authService.signOut()">Logout</button>
+    </ng-template>
 </div>
