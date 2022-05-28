@@ -72,15 +72,11 @@ export class AuthService {
     return (user !== null && user.emailVerified !== false) ? true : false;
   }
 
-  get userUid(): string | null {
-    return this.userData ? this.userData.uid : null;
-  }
-
   get isUserExists(): boolean {
     return (this.userData && this.userData.uid) ? true : false;
   }
 
-  get userId(): string | null {
+  get userUid(): string | null {
     return this.isUserExists ? this.userData!.uid : null;
   }
   

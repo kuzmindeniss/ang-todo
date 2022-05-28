@@ -57,3 +57,12 @@
     justify-self: stretch;
     justify-content: center;
 }
+
+.new-project__buttons {
+    display: flex;
+    align-content: space-between;
+    align-items: stretch;
+    justify-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}

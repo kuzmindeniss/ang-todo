@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ProjectService } from 'src/app/project.service';
 import { ModalService } from '../_modal';
 
@@ -8,14 +9,12 @@ import { ModalService } from '../_modal';
   styleUrls: ['./leftmenu.component.scss']
 })
 export class LeftmenuComponent implements OnInit {
-  bodyText: string = '';
-
   constructor(
     public projectService: ProjectService,
     public modalService: ModalService
   ) { }
 
   ngOnInit(): void {
-  }
 
+  }
 }

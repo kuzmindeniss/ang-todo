@@ -17,6 +17,8 @@ import { AuthService } from './auth.service';
 import { ProjectService } from './project.service';
 import { ModalModule } from './_modal';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,10 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     ModalModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      progressBar: true,
+    }),
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,

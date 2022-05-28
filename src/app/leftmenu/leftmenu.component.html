@@ -18,7 +18,10 @@
 </div>
 
 <jw-modal id="custom-modal-1">
-    <h1>A Custom Modal!</h1>
-    <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p>
-    <button (click)="modalService.close('custom-modal-1');">Close</button>
+    <h1>Project creating</h1>
+    <p>New project name <input type="text" [(ngModel)]="projectService.newProjectName"/></p>
+    <div class="new-project__buttons">
+        <button class="button" (click)="projectService.createProject()">Create</button>
+        <button class="button" (click)="modalService.close('custom-modal-1');">Close</button>
+    </div>
 </jw-modal>
