@@ -19,13 +19,14 @@ import { ModalModule } from './_modal';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     PagenotfoundComponent,
     LeftmenuComponent,
-    TopPanelComponent
+    TopPanelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -33,9 +34,8 @@ import { ToastrModule } from 'ngx-toastr';
     ModalModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      progressBar: true,
-    }),
+    ToastrModule.forRoot(),
+    NgxTrimDirectiveModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,

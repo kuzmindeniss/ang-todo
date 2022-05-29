@@ -19,9 +19,9 @@
 
 <jw-modal id="custom-modal-1">
     <h1>Project creating</h1>
-    <p>New project name <input type="text" [(ngModel)]="projectService.newProjectName"/></p>
+    <p>New project name <input class="input" trim="blur" type="text" [(ngModel)]="projectService.newProjectName"/></p>
     <div class="new-project__buttons">
-        <button class="button" (click)="projectService.createProject()">Create</button>
+        <button class="button" (click)="projectService.createProject(projectService.newProjectName)">Create</button>
         <button class="button" (click)="modalService.close('custom-modal-1');">Close</button>
     </div>
 </jw-modal>

@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class ProjectService {
-  newProjectName: string | undefined = undefined;
+  newProjectName: string  = '';
 
   constructor(
     private authService: AuthService,
@@ -20,15 +20,26 @@ export class ProjectService {
     });
   }
 
-  createProject() {
+  // newProjectNameChange(name: string) {
+  //   this.newProjectName = name.trim();
+  //   console.log(this.newProjectName);
+  //   return this.newProjectName;
+  // }
+
+  createProject(name: string) {
+    if (!name) {
+      this.toastr.warning('Project must have name');
+      return;
+    }
+
     const projectData = {
-      name: this.newProjectName,
+      name,
     };
-    // const projectRef = this.afs.doc(`userProjects/${this.authService.userUid}/${this.afs.createId()}`);
-    // const projectRefCollection = this.afs.collection(`users`);
     const projectRefDoc = this.afs.doc(`users/${this.authService.userUid}/projects/${this.afs.createId()}`);
     projectRefDoc.set(projectData).then(() => {
       this.toastr.success('Project created', projectData.name);
+    }).catch((error) => {
+      this.toastr.error(error);
     });
   }
 }
