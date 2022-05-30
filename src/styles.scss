@@ -88,14 +88,18 @@ ul {
     }
 
     &__list {
+        display: flex;
+        overflow: hidden;
+        height: auto;
         z-index: 100;
         position: absolute;
+        margin-top: 1px;
         width: 100%;
-        display: flex;
         flex-direction: column;
         border-radius: 8px;
         background: rgba(255,255,255,0.5);
         backdrop-filter: blur(2px);
+        transition: all 0.5s;
     }
 
     &__item {
@@ -105,14 +109,20 @@ ul {
         cursor: pointer;
         transition: all .3s;
 
+        &--selected {
+            background: rgba(255,255,255,0.6);
+        }
+
         &:hover {
-            background: rgba(255,255,255,0.2)
+            background: rgba(255,255,255,0.6);
         }
     }
 }
 
-.dropdown-menu--expanded .dropdown-menu__choosed {
-    box-shadow: none;
+.dropdown-menu--expanded {
+    .dropdown-menu__choosed {
+        box-shadow: none;
+    }
 }
 
 

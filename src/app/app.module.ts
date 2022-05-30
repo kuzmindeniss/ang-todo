@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { ModalCreateProjectComponent } from './modal-create-project/modal-create-project.component';
+import { DropdownMenuDirective } from './dropdown-menu.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ModalCreateProjectComponent } from './modal-create-project/modal-create
     LeftmenuComponent,
     TopPanelComponent,
     ModalCreateProjectComponent,
+    DropdownMenuDirective,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

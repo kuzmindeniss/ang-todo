@@ -2,7 +2,7 @@
     <h1>Project creating</h1>
     <label class="form-label">New project name <input class="input" trim="blur" type="text" [(ngModel)]="projectService.newProjectName"/></label>
 
-    <div class="dropdown-menu dropdown-menu--expanded">
+    <div appDropdownMenu class="dropdown-menu">
         <div class="dropdown-menu__choosed">
             <div class="dropdown-menu__select-color"></div>
             <div class="dropdown-menu__select-name">Gray</div>
