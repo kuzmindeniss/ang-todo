@@ -30,10 +30,10 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserAnimationsModule,
     AppRoutingModule,
     ModalModule,
     FormsModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule,
 
