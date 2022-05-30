@@ -13,15 +13,8 @@
                 </a>
             </li>
         </ul>
-        <button class="button create-project-button" (click)="modalService.open('custom-modal-1');" >Create project</button>
+        <button class="button create-project-button" (click)="modalService.open('create-project-modal');" >Create project</button>
     </section>
 </div>
 
-<jw-modal id="custom-modal-1">
-    <h1>Project creating</h1>
-    <p>New project name <input class="input" trim="blur" type="text" [(ngModel)]="projectService.newProjectName"/></p>
-    <div class="new-project__buttons">
-        <button class="button" (click)="projectService.createProject(projectService.newProjectName)">Create</button>
-        <button class="button" (click)="modalService.close('custom-modal-1');">Close</button>
-    </div>
-</jw-modal>
+<app-modal-create-project></app-modal-create-project>

@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { ModalCreateProjectComponent } from './modal-create-project/modal-create-project.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
     PagenotfoundComponent,
     LeftmenuComponent,
     TopPanelComponent,
+    ModalCreateProjectComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

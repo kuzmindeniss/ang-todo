@@ -11,13 +11,14 @@ import { ModalService } from './modal.service';
     animations: [
         trigger('openClose', [
             state('true', style({
-                opacity: '*'
+                opacity: '*',
             })),
             state('false', style({
                 opacity: '0',
-                'box-shadow': 'none'
+                'box-shadow': 'none',
+                'height': '0',
             })),
-            transition('false <=> true', animate(100))
+            transition('false <=> true', animate(200))
         ])
     ],
 })
@@ -45,17 +46,23 @@ export class ModalComponent implements OnInit, OnDestroy {
         });
 
         this.modalService.add(this);
+
+        if (localStorage.getItem(`modal-opened-${this.id}`) === 'true') {
+            this.open();
+        }
     }
 
     ngOnDestroy(): void {
         this.modalService.remove(this.id);
         this.element.remove();
+        localStorage.removeItem(`modal-opened-${this.id}`);
     }
 
     open(): void {
         this.element.style.display = 'block';
         this.isOpen = true;
         document.body.classList.add('jw-modal-open');
+        localStorage.setItem(`modal-opened-${this.id}`, 'true');
     }
 
     close(): void {
@@ -63,6 +70,7 @@ export class ModalComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.element.style.display = 'none';
             document.body.classList.remove('jw-modal-open');
-        }, 100);
+        }, 200);
+        localStorage.removeItem(`modal-opened-${this.id}`);
     }
 }
