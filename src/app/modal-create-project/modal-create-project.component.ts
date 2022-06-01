@@ -12,7 +12,7 @@ export class ModalCreateProjectComponent implements OnInit {
   constructor(
     public projectService: ProjectService,
     public modalService: ModalService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
   }

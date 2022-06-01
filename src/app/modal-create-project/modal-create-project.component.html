@@ -1,20 +1,16 @@
 <jw-modal id="create-project-modal">
-    <h1>Project creating</h1>
+    <h2>Project creating</h2>
     <label class="form-label">New project name <input class="input" trim="blur" type="text" [(ngModel)]="projectService.newProjectName"/></label>
 
     <div appDropdownMenu class="dropdown-menu">
         <div class="dropdown-menu__choosed">
             <div class="dropdown-menu__select-color"></div>
-            <div class="dropdown-menu__select-name">Gray</div>
+            <div class="dropdown-menu__select-name">{{ projectService.newProjectColor }}</div>
         </div>
         <ul class="dropdown-menu__list">
-            <li class="dropdown-menu__item">
-                <div class="dropdown-menu__select-color"></div>
-                <div class="dropdown-menu__select-name">Gray</div>
-            </li>
-            <li class="dropdown-menu__item">
-                <div class="dropdown-menu__select-color"></div>
-                <div class="dropdown-menu__select-name">Red</div>
+            <li class="dropdown-menu__item" *ngFor="let color of projectService.colors | keyvalue" [attr.data-selection-name]="color.key">
+                <div class="dropdown-menu__select-color" [style.backgroundColor]="color.value"></div>
+                <div class="dropdown-menu__select-name">{{ color.key }}</div>
             </li>
         </ul>
     </div>

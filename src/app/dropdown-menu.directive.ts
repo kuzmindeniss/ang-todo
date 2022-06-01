@@ -1,6 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 import { animate, AnimationBuilder, AnimationMetadata, AnimationPlayer, sequence, style } from '@angular/animations';
 import { ThisReceiver } from '@angular/compiler';
+import { ProjectService } from './project.service';
 
 @Directive({
   selector: '[appDropdownMenu]'
@@ -10,10 +11,12 @@ export class DropdownMenuDirective {
   title: HTMLDivElement | null = null;
   isExpanded: boolean = false;
   listPlayer?: AnimationPlayer;
+  choosedItemName: string | undefined;
 
   constructor(
     private el: ElementRef<HTMLDivElement>,
-    private animationBuilder: AnimationBuilder  
+    private animationBuilder: AnimationBuilder,
+    private projectService: ProjectService
   ) {
     
   }
@@ -22,9 +25,10 @@ export class DropdownMenuDirective {
     this.title = this.el.nativeElement.querySelector<HTMLDivElement>(".dropdown-menu__choosed");
     this.list = this.el.nativeElement.querySelector<HTMLUListElement>(".dropdown-menu__list");
     this.list!.style.height = '0px';
+    this.el.nativeElement.tabIndex = 1;
+    this.el.nativeElement.addEventListener('blur', event => this.close())
 
     this.list?.addEventListener('click', event => this.setTitle(event))
-
     this.title?.addEventListener('click', this.toggle);
   }
 
@@ -48,6 +52,9 @@ export class DropdownMenuDirective {
       this.title!.innerHTML = item.innerHTML;
       this.list?.querySelector('.dropdown-menu__item--selected')?.classList.remove('dropdown-menu__item--selected');
       item.classList.add('dropdown-menu__item--selected');
+      this.toggle();
+      this.projectService.newProjectColor = item.querySelector('.dropdown-menu__select-name')!.innerHTML;
+      this.choosedItemName = item.dataset['selectionName'];
     }
   }
 
@@ -63,6 +70,18 @@ export class DropdownMenuDirective {
 
     if (this.listPlayer) this.listPlayer.destroy();
     const metadata = !this.isExpanded ? this.fadeOut() : this.fadeIn();
+    const factory = this.animationBuilder.build(metadata);
+    const player = factory.create(this.list);
+    player.play();
+  }
+
+  close = () => {
+    if (!this.isExpanded) return;
+    this.isExpanded = false;
+    this.el.nativeElement.classList.remove('dropdown-menu--expanded');
+
+    if (this.listPlayer) this.listPlayer.destroy();
+    const metadata = this.fadeOut();
     const factory = this.animationBuilder.build(metadata);
     const player = factory.create(this.list);
     player.play();

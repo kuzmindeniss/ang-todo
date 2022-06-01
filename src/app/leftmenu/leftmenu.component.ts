@@ -18,6 +18,6 @@ export class LeftmenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    
   }
 }

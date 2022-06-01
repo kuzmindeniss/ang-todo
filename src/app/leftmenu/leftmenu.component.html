@@ -2,7 +2,7 @@
     <section class="left-menu__list">
         <h2>Projects</h2>
         <ul>
-            <li><a href="#">
+            <!-- <li><a href="#">
                     <div class="left-menu__item-color"></div>
                     List films
                 </a>
@@ -10,6 +10,12 @@
             <li><a href="#">
                     <div class="left-menu__item-color"></div>
                     Vuejs keyboard trainer
+                </a>
+            </li> -->
+            <li *ngFor="let project of projectService.projects">
+                <a href="#">
+                    <div class="left-menu__item-color"></div>
+                    {{ project.name }}
                 </a>
             </li>
         </ul>
