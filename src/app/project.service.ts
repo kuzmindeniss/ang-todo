@@ -31,7 +31,10 @@ export class ProjectService {
       projectsRef.get().subscribe({
         next: observer => {
           this.projects = observer.docs.map((projectDocument) => {
-            return projectDocument.data();
+            return {
+              ...projectDocument.data(),
+              id: projectDocument.id
+            };
           });
         },
         error: this.showErrorToastr

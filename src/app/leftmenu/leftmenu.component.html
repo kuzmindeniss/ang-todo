@@ -12,11 +12,14 @@
                     Vuejs keyboard trainer
                 </a>
             </li> -->
-            <li *ngFor="let project of projectService.projects">
+            <li *ngFor="let project of projectService.projects"  (click)="popperService.open('popper-' + project.id)">
                 <a href="#">
                     <div class="left-menu__item-color"></div>
                     {{ project.name }}
                 </a>
+                <popper [id]="'popper-' + project.id">
+                    {{ project.name }}
+                </popper>
             </li>
         </ul>
         <button class="button create-project-button" (click)="modalService.open('create-project-modal');" >Create project</button>

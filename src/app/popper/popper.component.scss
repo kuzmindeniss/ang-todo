@@ -1,0 +1,44 @@
+popper {
+    display: none;
+
+    .popper {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        overflow: auto;
+
+        h2 {
+            margin: 12px 0 26px;
+        }
+
+        .popper-body {
+            background: rgba( 255, 255, 255, 0.25 );
+            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 7px );
+            border-radius: 10px;
+            border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+            padding: 20px;
+            margin: 40px;
+        }
+    }
+
+    .popper-background {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 900;
+    }
+}
+
+body.popper-open {
+    overflow: hidden;
+}

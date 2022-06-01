@@ -22,6 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { ModalCreateProjectComponent } from './modal-create-project/modal-create-project.component';
 import { DropdownMenuDirective } from './dropdown-menu.directive';
+import { PopperModule } from './popper';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DropdownMenuDirective } from './dropdown-menu.directive';
     BrowserAnimationsModule,
     AppRoutingModule,
     ModalModule,
+    PopperModule,
     FormsModule,
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule,

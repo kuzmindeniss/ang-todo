@@ -2,7 +2,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ProjectService } from 'src/app/project.service';
-import { ModalService } from '../_modal';
+import { PopperService } from 'src/app/popper';
+import { ModalService } from 'src/app/_modal';
 
 @Component({
   selector: 'app-leftmenu',
@@ -14,7 +15,8 @@ export class LeftmenuComponent implements OnInit {
 
   constructor(
     public projectService: ProjectService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public popperService: PopperService,
   ) { }
 
   ngOnInit(): void {
