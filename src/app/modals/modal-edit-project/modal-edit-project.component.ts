@@ -4,20 +4,16 @@ import { ModalService } from 'src/app/_modal';
 import { ProjectInterface } from 'src/types';
 
 @Component({
-  selector: 'popper-project-menu',
-  templateUrl: './popper-project-menu.component.html',
-  styleUrls: ['./popper-project-menu.component.scss']
+  selector: 'app-modal-edit-project',
+  templateUrl: './modal-edit-project.component.html',
+  styleUrls: ['./modal-edit-project.component.scss']
 })
-export class PopperProjectMenuComponent implements OnInit {
-  @Input() id!: string;
-  @Input() item!: HTMLElement;
-  @Input() project!: ProjectInterface;
+export class ModalEditProjectComponent implements OnInit {
 
   constructor(
     public projectService: ProjectService,
     public modalService: ModalService,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
   }

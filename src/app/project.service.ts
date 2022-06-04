@@ -15,6 +15,11 @@ export class ProjectService {
   newProjectColor: string = 'Grey';
   colors = Colors;
   projects: ProjectInterface[] | undefined;
+  editingProject: ProjectInterface = {
+    id: '',
+    name: '',
+    color: 'Grey',
+  };
 
   constructor(
     private authService: AuthService,
@@ -71,6 +76,32 @@ export class ProjectService {
       this.initProjects(this.authService.userData);
       this.toastr.error(error);
     });
+  }
+
+  setEditingColor(color: string) {
+    this.editingProject.color = color as keyof typeof Colors;
+  }
+
+  editProject() {
+    const projectData = {
+      name: this.editingProject.name,
+      color: this.editingProject.color,
+    }
+    const projectRefDoc = this.afs.doc(`users/${this.authService.userUid}/projects/${this.editingProject.id}`);
+    projectRefDoc.set(projectData, {
+      merge: true
+    }).then(res => {
+      this.initProjects(this.authService.userData);
+      this.toastr.success(`Project ${projectData.name} edited.`);
+    }, err => {
+      this.initProjects(this.authService.userData);
+      this.toastr.error(err);
+    });
+    
+  }
+
+  setEditingProject(project: ProjectInterface) {
+    this.editingProject = JSON.parse(JSON.stringify(project));
   }
 
   deleteProject(id: string) {

@@ -1,14 +1,14 @@
 <popper [item]="item" [id]="'popper-' + project.id">
     <ul class="popper__list">
-        <li class="popper__item">
+        <li class="popper__item" (click)="projectService.setEditingProject(project); modalService.open('edit-project-modal')">
             <div class="popper__item-icon popper__item-icon--edit">
             </div>
             <div class="popper__item-content">Edit project</div>
         </li>
-        <li class="popper__item">
+        <li class="popper__item" (click)="projectService.deleteProject(project.id)">
             <div class="popper__item-icon popper__item-icon--delete">
             </div>
-            <div class="popper__item-content" (click)="projectService.deleteProject(project.id)">Delete project</div>
+            <div class="popper__item-content">Delete project</div>
         </li>
     </ul>
 </popper>

@@ -1,0 +1,22 @@
+<jw-modal id="edit-project-modal">
+    <h2>Project editing</h2>
+    <label class="form-label">Project name <input class="input" trim="blur" type="text" [(ngModel)]="projectService.editingProject.name"/></label>
+
+    <div appDropdownMenu [item]="projectService.editingProject.color" (itemChanged)="projectService.setEditingColor($event)" class="dropdown-menu">
+        <div class="dropdown-menu__choosed">
+            <div class="dropdown-menu__select-color" [style.backgroundColor]="projectService.colors[projectService.editingProject.color]"></div>
+            <div class="dropdown-menu__select-name">{{ projectService.editingProject.color }}</div>
+        </div>
+        <ul class="dropdown-menu__list">
+            <li class="dropdown-menu__item" *ngFor="let color of projectService.colors | keyvalue" [attr.data-selection-name]="color.key" [ngClass]="{'dropdown-menu__item--selected' : color.key === projectService.editingProject.color}">
+                <div  class="dropdown-menu__select-color" [style.backgroundColor]="color.value"></div>
+                <div class="dropdown-menu__select-name">{{ color.key }}</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="jw-modal__buttons">
+        <button class="button" (click)="projectService.editProject()">Edit</button>
+        <button class="button" (click)="modalService.close('edit-project-modal')">Close</button>
+    </div>
+</jw-modal>

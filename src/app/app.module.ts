@@ -24,6 +24,7 @@ import { ModalCreateProjectComponent } from './modals/modal-create-project/modal
 import { DropdownMenuDirective } from './dropdown-menu.directive';
 import { PopperModule } from './popper';
 import { PopperProjectMenuComponent } from './poppers/popper-project-menu/popper-project-menu.component';
+import { ModalEditProjectComponent } from './modals/modal-edit-project/modal-edit-project.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PopperProjectMenuComponent } from './poppers/popper-project-menu/popper
     ModalCreateProjectComponent,
     DropdownMenuDirective,
     PopperProjectMenuComponent,
+    ModalEditProjectComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

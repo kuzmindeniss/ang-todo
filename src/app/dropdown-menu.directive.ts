@@ -1,12 +1,14 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { animate, AnimationBuilder, AnimationMetadata, AnimationPlayer, sequence, style } from '@angular/animations';
-import { ThisReceiver } from '@angular/compiler';
 import { ProjectService } from './project.service';
 
 @Directive({
   selector: '[appDropdownMenu]'
 })
 export class DropdownMenuDirective {
+  @Input() item?: string;
+  @Output() itemChanged = new EventEmitter<string>();
+
   list: HTMLUListElement | null = null;
   title: HTMLDivElement | null = null;
   isExpanded: boolean = false;
@@ -28,33 +30,35 @@ export class DropdownMenuDirective {
     this.el.nativeElement.tabIndex = 1;
     this.el.nativeElement.addEventListener('blur', event => this.close())
 
-    this.list?.addEventListener('click', event => this.setTitle(event))
+    this.list?.addEventListener('click', event => this.setItemOnClick(event))
     this.title?.addEventListener('click', this.toggle);
   }
 
-  setTitle(event: MouseEvent) {
+  setItemOnClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
 
     let parent = target.parentElement;
-    let item = target;
+    let currentItem = target;
 
     let isTargetLi = false;
     while (parent) {
-      if (item.classList.contains('dropdown-menu__item')) {
+      if (currentItem.classList.contains('dropdown-menu__item')) {
         isTargetLi = true;
         break;
       };
-      item = parent;
-      parent = item.parentElement;
+      currentItem = parent;
+      parent = currentItem.parentElement;
     }
 
     if (isTargetLi) {
-      this.title!.innerHTML = item.innerHTML;
+      this.title!.innerHTML = currentItem.innerHTML;
       this.list?.querySelector('.dropdown-menu__item--selected')?.classList.remove('dropdown-menu__item--selected');
-      item.classList.add('dropdown-menu__item--selected');
+      currentItem.classList.add('dropdown-menu__item--selected');
       this.toggle();
-      this.projectService.newProjectColor = item.querySelector('.dropdown-menu__select-name')!.innerHTML;
-      this.choosedItemName = item.dataset['selectionName'];
+      this.projectService.newProjectColor = currentItem.querySelector('.dropdown-menu__select-name')!.innerHTML;
+      this.choosedItemName = currentItem.dataset['selectionName'];
+
+      this.itemChanged.emit(this.choosedItemName);
     }
   }
 
@@ -85,6 +89,21 @@ export class DropdownMenuDirective {
     const factory = this.animationBuilder.build(metadata);
     const player = factory.create(this.list);
     player.play();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['item'] && !changes['item'].firstChange) {
+      const newValue = changes['item'].currentValue;
+      const liWithData = this.list?.querySelector(`li[data-selection-name="${newValue}"]`) as HTMLElement;
+
+      this.title!.innerHTML = liWithData.innerHTML;
+      this.list?.querySelector('.dropdown-menu__item--selected')?.classList.remove('dropdown-menu__item--selected');
+      liWithData.classList.add('dropdown-menu__item--selected');
+      setTimeout(() => {
+        this.projectService.newProjectColor = liWithData.querySelector('.dropdown-menu__select-name')!.innerHTML;
+        this.choosedItemName = liWithData.dataset['selectionName'];
+      }, 0);
+    }
   }
 
   private fadeIn(): AnimationMetadata[] {
