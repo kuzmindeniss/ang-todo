@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
-import { ModalCreateProjectComponent } from './modal-create-project/modal-create-project.component';
+import { ModalCreateProjectComponent } from './modals/modal-create-project/modal-create-project.component';
 import { DropdownMenuDirective } from './dropdown-menu.directive';
 import { PopperModule } from './popper';
 

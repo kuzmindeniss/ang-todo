@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Colors, ProjectInterface } from 'src/types';
 import { PopperService } from './popper';
+import { ModalService } from './_modal';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class ProjectService {
     public afs: AngularFirestore,
     private toastr: ToastrService,
     private popperService: PopperService,
+    private modalService: ModalService
   ) {
     this.authService.userData$.subscribe({
       next: this.initProjects,
@@ -61,6 +63,7 @@ export class ProjectService {
     };
     const projectRefDoc = this.afs.doc(`users/${this.authService.userUid}/projects/${this.afs.createId()}`);
     projectRefDoc.set(projectData).then(() => {
+      this.modalService.close('create-project-modal');
       this.toastr.success('Project created', projectData.name);
       this.initProjects(this.authService.userData);
       this.newProjectName = "";
