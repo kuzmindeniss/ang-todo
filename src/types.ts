@@ -37,5 +37,5 @@ export interface User {
 export interface ProjectInterface {
     id: string;
     name: string;
-    color?: keyof typeof Colors;
+    color: keyof typeof Colors;
 }

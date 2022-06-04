@@ -23,8 +23,13 @@ import { PopperService } from './popper.service';
 })
 export class PopperComponent implements OnInit, OnDestroy {
   @Input() id!: string;
-  private element: any;
+  @Input() item!: HTMLElement;
+  private element: HTMLDivElement;
+  private popperBody!: HTMLDivElement;
+  private popperIcon!: HTMLButtonElement;
   isOpen = false;
+  popperWidth = 250;
+
 
   constructor(
     private popperService: PopperService,
@@ -38,6 +43,9 @@ export class PopperComponent implements OnInit, OnDestroy {
       console.error('modal must have an id');
       return;
     }
+
+    this.popperBody = this.element.querySelector(".popper-body") as HTMLDivElement;
+    this.popperIcon = this.item.querySelector(".popper-icon") as HTMLButtonElement;
 
     this.element.addEventListener('click', (el: any) => {
       if (el.target.classList.contains('popper')) {
@@ -59,8 +67,14 @@ export class PopperComponent implements OnInit, OnDestroy {
   }
 
   open(): void {
-    console.log('open()');
+    const itemRect = this.item.getBoundingClientRect();
+    const popperIconRect = this.popperIcon.getBoundingClientRect();
+    const offsetTop = itemRect.bottom + window.scrollY;
+    const offsetLeft = itemRect.right + window.scrollX - (this.popperWidth / 2) - (popperIconRect.width / 2);
+
+    this.popperBody.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`;
     this.element.style.display = 'block';
+    this.item.classList.add("left-menu__item-popper-opened");
     this.isOpen = true;
     document.body.appendChild(this.element);
     document.body.classList.add('popper-open');
@@ -69,6 +83,7 @@ export class PopperComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.isOpen = false;
+    this.item.classList.remove("left-menu__item-popper-opened");
     setTimeout(() => {
       this.element.style.display = 'none';
       this.element.remove();

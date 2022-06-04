@@ -8,7 +8,7 @@
             <div class="dropdown-menu__select-name">{{ projectService.newProjectColor }}</div>
         </div>
         <ul class="dropdown-menu__list">
-            <li class="dropdown-menu__item" *ngFor="let color of projectService.colors | keyvalue" [attr.data-selection-name]="color.key">
+            <li class="dropdown-menu__item" *ngFor="let color of projectService.colors | keyvalue" [attr.data-selection-name]="color.key" [ngClass]="{'dropdown-menu__item--selected' : color.key === projectService.newProjectColor}">
                 <div class="dropdown-menu__select-color" [style.backgroundColor]="color.value"></div>
                 <div class="dropdown-menu__select-name">{{ color.key }}</div>
             </li>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="new-project__buttons">
-        <button class="button" (click)="projectService.createProject(projectService.newProjectName)">Create</button>
+        <button class="button" (click)="projectService.createProject(projectService.newProjectName, projectService.newProjectColor)">Create</button>
         <button class="button" (click)="modalService.close('create-project-modal')">Close</button>
     </div>
 </jw-modal>

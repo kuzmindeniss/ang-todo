@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Colors, ProjectInterface } from 'src/types';
+import { PopperService } from './popper';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
   newProjectName: string = '';
-  newProjectColor: string = 'Grey'
+  newProjectColor: string = 'Grey';
   colors = Colors;
   projects: ProjectInterface[] | undefined;
 
@@ -18,6 +19,7 @@ export class ProjectService {
     private authService: AuthService,
     public afs: AngularFirestore,
     private toastr: ToastrService,
+    private popperService: PopperService,
   ) {
     this.authService.userData$.subscribe({
       next: this.initProjects,
@@ -37,12 +39,17 @@ export class ProjectService {
             };
           });
         },
-        error: this.showErrorToastr
+        error: error => {
+          this.showErrorToastr(error);
+          this.projects = [];
+        }
       });
+    } else {
+      this.projects = [];
     }
   }
 
-  createProject(name: string) {
+  createProject(name: string, color: string) {
     if (!name) {
       this.toastr.warning('Project must have name');
       return;
@@ -50,13 +57,25 @@ export class ProjectService {
 
     const projectData = {
       name,
-      color: this.newProjectColor,
+      color,
     };
     const projectRefDoc = this.afs.doc(`users/${this.authService.userUid}/projects/${this.afs.createId()}`);
     projectRefDoc.set(projectData).then(() => {
       this.toastr.success('Project created', projectData.name);
+      this.initProjects(this.authService.userData);
+      this.newProjectName = "";
     }).catch((error) => {
+      this.initProjects(this.authService.userData);
       this.toastr.error(error);
+    });
+  }
+
+  deleteProject(id: string) {
+    this.popperService.close(`popper-${id}`);
+    const projectRef = this.afs.doc(`users/${this.authService.userUid}/projects/${id}`);
+    projectRef.delete().then(res => {
+      console.log(res);
+      this.initProjects(this.authService.userData);
     });
   }
 
