@@ -23,6 +23,7 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { ModalCreateProjectComponent } from './modals/modal-create-project/modal-create-project.component';
 import { DropdownMenuDirective } from './dropdown-menu.directive';
 import { PopperModule } from './popper';
+import { PopperProjectMenuComponent } from './poppers/popper-project-menu/popper-project-menu.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PopperModule } from './popper';
     TopPanelComponent,
     ModalCreateProjectComponent,
     DropdownMenuDirective,
+    PopperProjectMenuComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -25,7 +25,7 @@ export class ProjectService {
   ) {
     this.authService.userData$.subscribe({
       next: this.initProjects,
-      error: this.showErrorToastr,
+      error: this.toastr.error,
     });
   }
 
@@ -42,7 +42,7 @@ export class ProjectService {
           });
         },
         error: error => {
-          this.showErrorToastr(error);
+          this.toastr.error(error);
           this.projects = [];
         }
       });
@@ -77,12 +77,7 @@ export class ProjectService {
     this.popperService.close(`popper-${id}`);
     const projectRef = this.afs.doc(`users/${this.authService.userUid}/projects/${id}`);
     projectRef.delete().then(res => {
-      console.log(res);
       this.initProjects(this.authService.userData);
     });
-  }
-
-  showErrorToastr = (error: any) => {
-    this.toastr.error(error);
   }
 }
