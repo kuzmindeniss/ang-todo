@@ -82,7 +82,10 @@ export class AuthService {
   
   signOut() {
     return this.afAuth.signOut().then(() => {
+      this.userData = null;
+      this.userData$.next(this.userData);
       localStorage.removeItem('user');
+      this.router.navigate(['']);
     });
   }
 }

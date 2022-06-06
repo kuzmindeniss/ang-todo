@@ -13,7 +13,6 @@ body {
     min-height: 100vh;
     font-family: 'Raleway', sans-serif;
     color: #000;
-    // @include popperjs.ngx-popperjs-theme($background-color, $text-color, $max-width, $z-index);
 }
 
 ul {
@@ -47,6 +46,63 @@ ul {
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             background: rgba(255, 255, 255, 0.15);
         }
+    }
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row;
+    min-height: 100vh;
+    gap: 24px;
+    height: 100vh;
+    padding: 24px;
+    background-color:#99fffd;
+    background-image:
+        radial-gradient(at 15% 7%, hsla(109,75%,78%,1) 0px, transparent 50%),
+        radial-gradient(at 17% 73%, hsla(205,86%,70%,1) 0px, transparent 50%),
+        radial-gradient(at 14% 8%, hsla(278,77%,68%,1) 0px, transparent 50%),
+        radial-gradient(at 67% 17%, hsla(260,67%,75%,1) 0px, transparent 50%),
+        radial-gradient(at 47% 6%, hsla(115,87%,66%,1) 0px, transparent 50%),
+        radial-gradient(at 90% 6%, hsla(275,85%,62%,1) 0px, transparent 50%),
+        radial-gradient(at 82% 5%, hsla(318,68%,61%,1) 0px, transparent 50%);
+}
+
+.right-wrapper {
+    height: 1px;
+    min-height: calc(100vh - 24px);
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    padding-bottom: 24px;
+}
+
+.main-content-wrapper {
+    position: absolute;
+    padding: 20px;
+    max-height: calc(100% - 59px - 24px);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-image: linear-gradient(45deg, #36b6f1, #af9bf8);
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, .12) 0 3px 13px 1px;
     }
 }
 

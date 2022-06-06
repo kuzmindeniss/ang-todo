@@ -1,0 +1,4 @@
+<div class="main-content-wrapper">
+        <loading-circle-svg *ngIf="projectService.projects === undefined"></loading-circle-svg>
+    <p *ngIf="project && project.name">{{ project.name }}</p>
+</div>

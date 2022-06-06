@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SignInComponent } from 'src/app/sign-in/sign-in.component';
+import { AuthGuard } from './guard/auth.guard';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { ProjectPageComponent } from './pages/project-page/project-page.component';
 
 const routes: Routes = [
-  {path: '**', pathMatch: 'full', component: PagenotfoundComponent}
+  { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
+  { path: 'project/:id', component: ProjectPageComponent, canActivate: [AuthGuard] },
+  { path: 'sign-in', component: SignInComponent },
+  { path: '**', component: PagenotfoundComponent },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Colors } from "src/types";
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,12 @@ import { Colors } from "src/types";
 })
 export class AppComponent {
   title = 'ang-todo';
-  str = Colors;
+
+  constructor(
+    public authService: AuthService
+  ) {
+
+  }
 
   ngOnInit() {
   }

@@ -1,7 +1,7 @@
 <div class="wrapper">
-    <app-leftmenu></app-leftmenu>
+    <app-leftmenu *ngIf="authService.isLoggedIn"></app-leftmenu>
     <div class="right-wrapper">
         <app-top-panel></app-top-panel>
+        <router-outlet></router-outlet>
     </div>
-    <!-- <router-outlet></router-outlet> -->
 </div>

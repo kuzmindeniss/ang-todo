@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Colors, ProjectInterface } from 'src/types';
@@ -14,7 +14,8 @@ export class ProjectService {
   newProjectName: string = '';
   newProjectColor: string = 'Grey';
   colors = Colors;
-  projects: ProjectInterface[] | undefined;
+  projects: ProjectInterface[] | undefined | null = undefined;
+  projects$ = new BehaviorSubject<typeof this.projects>(this.projects);
   editingProject: ProjectInterface = {
     id: '',
     name: '',
@@ -45,14 +46,17 @@ export class ProjectService {
               id: projectDocument.id
             };
           });
+          this.projects$.next(this.projects);
         },
         error: error => {
           this.toastr.error(error);
           this.projects = [];
+          this.projects$.next(this.projects);
         }
       });
     } else {
       this.projects = [];
+      this.projects$.next(this.projects);
     }
   }
 
