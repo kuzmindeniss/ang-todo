@@ -29,6 +29,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoadingCircleSvgComponent } from './svg-components/loading-circle-svg/loading-circle-svg.component';
+import { AutofocusDirective } from './autofocus.directive';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LoadingCircleSvgComponent } from './svg-components/loading-circle-svg/l
     ProjectPageComponent,
     HomePageComponent,
     LoadingCircleSvgComponent,
+    AutofocusDirective,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

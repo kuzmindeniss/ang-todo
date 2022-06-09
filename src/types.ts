@@ -34,8 +34,14 @@ export interface User {
     emailVerified: boolean;
 }
 
+export interface TaskInterface {
+    name: string;
+    description: string;
+}
+
 export interface ProjectInterface {
     id: string;
     name: string;
     color: keyof typeof Colors;
+    tasks?: TaskInterface[];
 }

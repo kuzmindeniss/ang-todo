@@ -3,7 +3,7 @@
         <button class="button" (click)="authService.googleAuth()">Login</button>
     </ng-template>
     <ng-template #signOut>
-        <button *ngIf="authService.userData && authService.userData.email" class="button button--untouched">{{ authService.userData.email }}</button>
+        <button *ngIf="authService.userData && authService.userData.email" class="button button--untouchable">{{ authService.userData.email }}</button>
         <button class="button" (click)="authService.signOut()">Logout</button>
     </ng-template>
 </div>

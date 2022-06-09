@@ -3,9 +3,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Colors, ProjectInterface } from 'src/types';
+import { Colors, ProjectInterface, TaskInterface } from 'src/types';
 import { PopperService } from './popper';
 import { ModalService } from './_modal';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class ProjectService {
     name: '',
     color: 'Grey',
   };
+  projectsTasks: { [key: string]: TaskInterface[] } = {};
 
   constructor(
     private authService: AuthService,
@@ -37,13 +39,13 @@ export class ProjectService {
 
   initProjects = (user: firebase.default.User | null) => {
     if (user && user.uid) {
-      const projectsRef = this.authService.afs.collection<ProjectInterface>(`users/${user.uid}/projects`);
+      const projectsRef = this.afs.collection<ProjectInterface>(`users/${user.uid}/projects`, (ref) => ref.orderBy('createdAt'));
       projectsRef.get().subscribe({
         next: observer => {
           this.projects = observer.docs.map((projectDocument) => {
             return {
               ...projectDocument.data(),
-              id: projectDocument.id
+              id: projectDocument.id,
             };
           });
           this.projects$.next(this.projects);
@@ -69,6 +71,7 @@ export class ProjectService {
     const projectData = {
       name,
       color,
+      createdAt: new Date().getTime(),
     };
     const projectRefDoc = this.afs.doc(`users/${this.authService.userUid}/projects/${this.afs.createId()}`);
     projectRefDoc.set(projectData).then(() => {
@@ -101,7 +104,7 @@ export class ProjectService {
       this.initProjects(this.authService.userData);
       this.toastr.error(err);
     });
-    
+
   }
 
   setEditingProject(project: ProjectInterface) {
@@ -113,6 +116,47 @@ export class ProjectService {
     const projectRef = this.afs.doc(`users/${this.authService.userUid}/projects/${id}`);
     projectRef.delete().then(res => {
       this.initProjects(this.authService.userData);
+    });
+  }
+
+  createTask(title: string, description: string, projectId: string) {
+    const taskRef = this.afs.doc(`users/${this.authService.userUid}/projects/${projectId}/tasks/${this.afs.createId()}`);
+    taskRef.set({
+      name: title,
+      description,
+      createdAt: new Date().getTime(),
+    }).then(() => {
+      this.toastr.success("Task Created");
+    });
+  }
+
+  getProjectTasks(projectId: string): Observable<TaskInterface[]> {
+    if (this.authService.isUserExists) {
+      const taskRef = this.afs.collection<TaskInterface>(`users/${this.authService.userUid}/projects/${projectId}/tasks`, (ref) => ref.orderBy('createdAt'));
+      return new Observable(obs => {
+        taskRef.get().subscribe({
+          next: observer => {
+            const tasks = observer.docs.map((taskDocument) => {
+              return {
+                ...taskDocument.data(),
+                id: taskDocument.id,
+              }
+            })
+
+            this.projectsTasks[projectId] = tasks;
+            obs.next(tasks);
+            obs.complete();
+          },
+          error: error => {
+            this.toastr.error(error);
+            obs.error(error);
+          }
+        })
+      });
+    }
+    return new Observable((observable) => {
+      observable.next([]);
+      observable.complete();
     });
   }
 }
