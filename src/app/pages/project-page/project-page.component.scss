@@ -1,3 +1,8 @@
+.main-content-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 .create-task-button {
     display: flex;
     width: 100%;
@@ -7,7 +12,10 @@
     font-size: 1rem;
     background: none;
     cursor: pointer;
-    transition: all .5s;
+    transition: all .15s;
+    padding-left: 0;
+    color: rgba(0, 0, 0, .5);
+    transition: all .15s;
 
     .create-task-button-svg {  
         display: flex;
@@ -16,15 +24,13 @@
         width: 24px;
         height: 24px;
         border-radius: 16px;
-        transition: all .5s;
+        transition: all .15s;
     }
 
     &:hover {
         .create-task-button-svg {
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 0 8px rgb(0 0 0 / 10%);
-            // -webkit-backdrop-filter: blur(5px);
-            // backdrop-filter: blur(5px);
         }
     }
 
@@ -33,7 +39,7 @@
     }
 
     &:hover {
-        color: rgba(0, 0, 0, .7);
+        color: rgba(0, 0, 0, 1);
     }
 }
 
@@ -79,3 +85,73 @@
         gap: 12px;
     }
 }
+
+.tasks__view-content {
+    flex-basis: 800px;
+}
+
+.tasks__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tasks__list {
+    margin-bottom: 16px;
+}
+
+.tasks__item {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin-bottom: 12px;
+
+    &--completed {
+        text-decoration: line-through;
+    }
+}
+
+.tasks__item-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    user-select: none;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &-circle {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+        border-radius: 50%;
+        overflow: hidden;
+
+        svg {
+            height: 16px;
+            width: 16px;
+            margin-top: -8px;
+            margin-left: -8px;
+            transition: opacity .15s ease-in-out;
+            pointer-events: none;
+            opacity: 0;
+        }
+    }
+}
+
+.tasks__item-checkbox:hover .tasks__item-checkbox-circle-svg {
+    opacity: .35;
+}
+
+.tasks__item--completed .tasks__item-checkbox .tasks__item-checkbox-circle-svg {
+    opacity: .7;
+}
+

@@ -1,29 +1,64 @@
 <div class="main-content-wrapper">
-    <loading-circle-svg *ngIf="projectService.projects === undefined"></loading-circle-svg>
+    <div class="tasks__view-content">
+        <loading-circle-svg *ngIf="projectService.projects === undefined"></loading-circle-svg>
 
-    <ng-template [ngIf]="project && project.name">
-        <h2>{{ project.name }}</h2>
-        <ul>
-            <li *ngFor="let task of tasks">
-                <p>{{ task.name }}</p>
-            </li>
-        </ul>
-        <button class="create-task-button" *ngIf="!isAddingNewTask" (click)="isAddingNewTask = true">
-            <span class="create-task-button-svg">
-                <svg width="13" height="13"><path d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z" fill="currentColor" fill-rule="evenodd"></path></svg>
-            </span>
-            <span class="create-task-button-span">Add task</span>
-        </button>
-        <div class="creating-new-task" *ngIf="isAddingNewTask">
-            <div class="creating-new-task__title-container">
-                <div class="creating-new-task__title-placeholder" *ngIf="!newTaskTitle.length">e.g. Buy gift tomorrow at 6pm</div>
-                <div class="creating-new-task__title" autofocus (input)="onChangeTaskTitle($event)" trim="blur" contenteditable spellcheck></div>
+        <ng-template [ngIf]="project && project.name">
+            <div class="tasks__header">
+                <h2>{{ project.name }}</h2>
+                <div class="tasks__header-buttons">
+                    <button class="button tasks__header-button" (click)="projectService.showCompletedTasks = !projectService.showCompletedTasks">
+                        <ng-template [ngIf]="projectService.showCompletedTasks" [ngIfElse]="elseBlock">
+                            Hide completed tasks
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <span>Show completed tasks</span>
+                        </ng-template>
+                    </button>
+                </div>
             </div>
-            <textarea #descr class="creating-new-task__textarea" placeholder="Description"></textarea>
-            <div class="creating-new-task__buttons">
-                <button class="button" (click)="onAddTask(newTaskTitle, descr.value)" [disabled]="!isNewTaskTitleValid" [ngClass]="{'button--blocked' : !isNewTaskTitleValid}">Add task</button>
-                <button class="button" (click)="isAddingNewTask = false; newTaskTitle = ''">Close</button>
+            <ul class="tasks__list">
+                <ng-container *ngFor="let task of tasks">
+                    <li class="tasks__item" [ngClass]="{'tasks__item--completed': task.isCompleted}" *ngIf="doShowTask(task)">
+                        <button class="tasks__item-checkbox" (click)="completeTask(task)">
+                            <div class="tasks__item-checkbox-circle">
+                                <svg class="tasks__item-checkbox-circle-svg" width="24" height="24">
+                                    <path fill="currentColor"
+                                        d="M11.23 13.7l-2.15-2a.55.55 0 0 0-.74-.01l.03-.03a.46.46 0 0 0 0 .68L11.24 15l5.4-5.01a.45.45 0 0 0 0-.68l.02.03a.55.55 0 0 0-.73 0l-4.7 4.35z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="tasks__item-content">{{ task.name }}</div>
+                    </li>
+                </ng-container>
+                
+            </ul>
+            <button class="create-task-button" *ngIf="!isAddingNewTask" (click)="isAddingNewTask = true">
+                <span class="create-task-button-svg">
+                    <svg width="13" height="13">
+                        <path
+                            d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
+                            fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                </span>
+                <span class="create-task-button-span">Add task</span>
+            </button>
+            <div class="creating-new-task" *ngIf="isAddingNewTask">
+                <div class="creating-new-task__title-container">
+                    <div class="creating-new-task__title-placeholder" *ngIf="!newTaskTitle.length">e.g. Buy gift
+                        tomorrow at 6pm</div>
+                    <div class="creating-new-task__title" autofocus (input)="onChangeTaskTitle($event)" trim="blur"
+                        contenteditable spellcheck></div>
+                </div>
+                <textarea #descr class="creating-new-task__textarea" placeholder="Description"></textarea>
+                <div class="creating-new-task__buttons">
+                    <button class="button" (click)="onAddTask(newTaskTitle, descr.value)"
+                        [disabled]="!isNewTaskTitleValid" [ngClass]="{'button--blocked' : !isNewTaskTitleValid}">Add
+                        task</button>
+                    <button class="button" (click)="isAddingNewTask = false; newTaskTitle = ''">Close</button>
+                </div>
             </div>
-        </div>
-    </ng-template>
+        </ng-template>
+    </div>
+
 </div>

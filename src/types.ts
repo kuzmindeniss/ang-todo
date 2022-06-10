@@ -35,8 +35,10 @@ export interface User {
 }
 
 export interface TaskInterface {
+    id: string;
     name: string;
     description: string;
+    isCompleted?: boolean;
 }
 
 export interface ProjectInterface {

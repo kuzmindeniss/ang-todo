@@ -16,8 +16,8 @@ export class ProjectPageComponent implements OnInit {
   project?: ProjectInterface = undefined;
   project$ = new BehaviorSubject<typeof this.project>(this.project);
   id: string;
-  isAddingNewTask = false;
-  newTaskTitle = "";
+  isAddingNewTask: boolean = false;
+  newTaskTitle: string = "";
   tasks: TaskInterface[] = [];
 
   constructor(
@@ -66,6 +66,30 @@ export class ProjectPageComponent implements OnInit {
     });
   }
 
+  completeTask(task: TaskInterface) {
+    if (!task.isCompleted) {
+      task.isCompleted = true;
+      this.projectService.completeTask(this.id, task).subscribe({
+        next: obs => {
+          task.isCompleted = true;
+        },
+        error: err => {
+          this.toastr.error(err);
+        }
+      });
+    } else {
+      task.isCompleted = false;
+      this.projectService.uncompleteTask(this.id, task).subscribe({
+        next: obs => {
+          task.isCompleted = false;
+        },
+        error: err => {
+          this.toastr.error(err);
+        }
+      })
+    }
+  }
+
   onChangeTaskTitle(event: Event) {
     this.newTaskTitle = (event.target as HTMLElement).textContent ? (event.target as HTMLElement).textContent! : "";
   }
@@ -78,6 +102,11 @@ export class ProjectPageComponent implements OnInit {
 
   get isNewTaskTitleValid(): boolean {
     return this.newTaskTitle.trim().length ? true : false;
+  }
+
+  doShowTask(task: TaskInterface) {
+    if (task.isCompleted && !this.projectService.showCompletedTasks) return false;
+    return true;
   }
 
 }

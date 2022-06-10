@@ -23,6 +23,7 @@ export class ProjectService {
     color: 'Grey',
   };
   projectsTasks: { [key: string]: TaskInterface[] } = {};
+  showCompletedTasks: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -131,7 +132,7 @@ export class ProjectService {
   }
 
   getProjectTasks(projectId: string): Observable<TaskInterface[]> {
-    if (this.authService.isUserExists) {
+    if (this.authService.isUserExists && projectId) {
       const taskRef = this.afs.collection<TaskInterface>(`users/${this.authService.userUid}/projects/${projectId}/tasks`, (ref) => ref.orderBy('createdAt'));
       return new Observable(obs => {
         taskRef.get().subscribe({
@@ -156,6 +157,56 @@ export class ProjectService {
     }
     return new Observable((observable) => {
       observable.next([]);
+      observable.complete();
+    });
+  }
+
+  completeTask(projectId: string, task: TaskInterface): Observable<TaskInterface> {
+    if (this.authService.isUserExists && projectId && task.id) {
+      const taskRef = this.afs.doc<TaskInterface>(`users/${this.authService.userUid}/projects/${projectId}/tasks/${task.id}`);
+      return new Observable(obs => {
+        taskRef.set({
+          ...task,
+          isCompleted: true,
+        }, {merge: true}).then(res => {
+          obs.next({
+            ...task,
+            isCompleted: true
+          });
+          obs.complete();
+        }).catch(err => {
+          obs.error(err);
+          obs.complete();
+        });
+      });
+    }
+    return new Observable((observable) => {
+      observable.next(task);
+      observable.complete();
+    });
+  }
+
+  uncompleteTask(projectId: string, task: TaskInterface): Observable<TaskInterface> {
+    if (this.authService.isUserExists && projectId && task.id) {
+      const taskRef = this.afs.doc<TaskInterface>(`users/${this.authService.userUid}/projects/${projectId}/tasks/${task.id}`);
+      return new Observable(obs => {
+        taskRef.set({
+          ...task,
+          isCompleted: false,
+        }, {merge: true}).then(res => {
+          obs.next({
+            ...task,
+            isCompleted: false
+          });
+          obs.complete();
+        }).catch(err => {
+          obs.error(err);
+          obs.complete();
+        });
+      });
+    }
+    return new Observable((observable) => {
+      observable.next(task);
       observable.complete();
     });
   }
