@@ -67,10 +67,9 @@ export class PopperComponent implements OnInit, OnDestroy {
   }
 
   open(): void {
-    const itemRect = this.item.getBoundingClientRect();
     const popperIconRect = this.popperIcon.getBoundingClientRect();
-    const offsetTop = itemRect.bottom + window.scrollY;
-    const offsetLeft = itemRect.right + window.scrollX - (this.popperWidth / 2) - (popperIconRect.width / 2);
+    const offsetTop = popperIconRect.bottom + window.scrollY;
+    const offsetLeft = popperIconRect.right + window.scrollX - (this.popperWidth / 2) - (popperIconRect.width / 2);
 
     this.popperBody.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`;
     this.element.style.display = 'block';

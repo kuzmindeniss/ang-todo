@@ -22,7 +22,7 @@ export class ProjectService {
     name: '',
     color: 'Grey',
   };
-  projectsTasks: { [key: string]: TaskInterface[] } = {};
+  tasksCache: { [key: string]: TaskInterface[] } = {};
   showCompletedTasks: boolean = false;
 
   constructor(
@@ -144,7 +144,7 @@ export class ProjectService {
               }
             })
 
-            this.projectsTasks[projectId] = tasks;
+            this.tasksCache[projectId] = tasks;
             obs.next(tasks);
             obs.complete();
           },
@@ -209,5 +209,31 @@ export class ProjectService {
       observable.next(task);
       observable.complete();
     });
+  }
+
+  deleteTask(projectId: string, task: TaskInterface): Observable<boolean> {
+    this.popperService.close(`popper-task-${task.id}`);
+
+    if (this.authService.isUserExists && projectId && task.id) {
+      const taskRef = this.afs.doc(`users/${this.authService.userUid}/projects/${projectId}/tasks/${task.id}`);
+      return new Observable(obs => {
+        taskRef.delete().then(res => {
+          this.removeTaskFromCache(projectId, task);
+          obs.next(true);
+          obs.complete();
+        }).catch(err => {
+          obs.error(err);
+          obs.complete();
+        });
+      });
+    }
+    return new Observable((observable) => {
+      observable.next(false);
+      observable.complete();
+    });
+  }
+
+  removeTaskFromCache(projectId: string, task: TaskInterface) {
+    this.tasksCache[projectId] = this.tasksCache[projectId].filter(el => el.id !== task.id);
   }
 }

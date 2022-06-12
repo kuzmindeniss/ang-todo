@@ -30,6 +30,7 @@ import { ProjectPageComponent } from './pages/project-page/project-page.componen
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoadingCircleSvgComponent } from './svg-components/loading-circle-svg/loading-circle-svg.component';
 import { AutofocusDirective } from './autofocus.directive';
+import { PopperTaskMenuComponent } from './poppers/popper-task-menu/popper-task-menu.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AutofocusDirective } from './autofocus.directive';
     HomePageComponent,
     LoadingCircleSvgComponent,
     AutofocusDirective,
+    PopperTaskMenuComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

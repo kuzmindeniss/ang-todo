@@ -100,14 +100,32 @@
 }
 
 .tasks__item {
+    position: relative;
     display: flex;
     flex-flow: row;
     align-items: center;
     margin-bottom: 12px;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: all .15s;
+
+    &--selected {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+    }
 
     &--completed {
         text-decoration: line-through;
     }
+}
+
+.tasks__item-content {
+    flex-grow: 1;
 }
 
 .tasks__item-checkbox {
@@ -153,5 +171,25 @@
 
 .tasks__item--completed .tasks__item-checkbox .tasks__item-checkbox-circle-svg {
     opacity: .7;
+}
+
+.popper-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+    background: none;
+    color: rgba(0, 0, 0, 0.8);
+    transition: color 0.5s;
+    cursor: pointer;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+.tasks__item:hover .popper-icon {
+    display: flex;
 }
 

@@ -6,7 +6,8 @@
             <div class="tasks__header">
                 <h2>{{ project.name }}</h2>
                 <div class="tasks__header-buttons">
-                    <button class="button tasks__header-button" (click)="projectService.showCompletedTasks = !projectService.showCompletedTasks">
+                    <button class="button tasks__header-button"
+                        (click)="projectService.showCompletedTasks = !projectService.showCompletedTasks">
                         <ng-template [ngIf]="projectService.showCompletedTasks" [ngIfElse]="elseBlock">
                             Hide completed tasks
                         </ng-template>
@@ -18,7 +19,8 @@
             </div>
             <ul class="tasks__list">
                 <ng-container *ngFor="let task of tasks">
-                    <li class="tasks__item" [ngClass]="{'tasks__item--completed': task.isCompleted}" *ngIf="doShowTask(task)">
+                    <li #popperItem class="tasks__item" [ngClass]="{'tasks__item--completed': task.isCompleted}"
+                        *ngIf="doShowTask(task)">
                         <button class="tasks__item-checkbox" (click)="completeTask(task)">
                             <div class="tasks__item-checkbox-circle">
                                 <svg class="tasks__item-checkbox-circle-svg" width="24" height="24">
@@ -29,9 +31,18 @@
                             </div>
                         </button>
                         <div class="tasks__item-content">{{ task.name }}</div>
+
+                        <button class="popper-icon" (click)="popperService.open('popper-task-' + task.id)">
+                            <svg width="15" height="3">
+                                <path
+                                    d="M1.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                                    fill="currentColor" fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <popper-task-menu (deleteTaskEvent)="deleteTask($event)" [projectId]="id" [item]="popperItem" [task]="task" [id]="'popper-task-' + task.id"></popper-task-menu>
                     </li>
                 </ng-container>
-                
+
             </ul>
             <button class="create-task-button" *ngIf="!isAddingNewTask" (click)="isAddingNewTask = true">
                 <span class="create-task-button-svg">

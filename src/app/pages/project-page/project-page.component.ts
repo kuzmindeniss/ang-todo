@@ -5,6 +5,7 @@ import { ProjectService } from 'src/app/project.service';
 import { ProjectInterface, TaskInterface } from 'src/types';
 import { isEqual } from "lodash";
 import { ToastrService } from 'ngx-toastr';
+import { PopperService } from 'src/app/popper';
 
 @Component({
   selector: 'project-page',
@@ -25,6 +26,7 @@ export class ProjectPageComponent implements OnInit {
     private route: ActivatedRoute,
     public projectService: ProjectService,
     public toastr: ToastrService,
+    public popperService: PopperService,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.id = this.route.snapshot.params['id'];
@@ -48,8 +50,8 @@ export class ProjectPageComponent implements OnInit {
   }
 
   initProjectTasks() {
-    if (this.projectService.projectsTasks[this.id]) {
-      this.tasks = this.projectService.projectsTasks[this.id];
+    if (this.projectService.tasksCache[this.id]) {
+      this.tasks = this.projectService.tasksCache[this.id];
       this.areTasksLoaded = true;
     }
 
@@ -107,6 +109,22 @@ export class ProjectPageComponent implements OnInit {
   doShowTask(task: TaskInterface) {
     if (task.isCompleted && !this.projectService.showCompletedTasks) return false;
     return true;
+  }
+
+  deleteTask(task: TaskInterface) {
+    const _tasks = [...this.tasks];
+    this.tasks = this.tasks.filter(el => el.id !== task.id);
+
+    this.projectService.deleteTask(this.id, task).subscribe({
+      next: obs => {
+        if (obs !== true) {
+          this.tasks = _tasks;
+        }
+      },
+      error: err => {
+        this.tasks = _tasks;
+      }
+    });
   }
 
 }
