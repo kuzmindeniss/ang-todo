@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { PopperService } from './popper.service';
 
 @Component({
@@ -24,6 +24,7 @@ import { PopperService } from './popper.service';
 export class PopperComponent implements OnInit, OnDestroy {
   @Input() id!: string;
   @Input() item!: HTMLElement;
+  @Output() closeEvent = new EventEmitter<boolean>();
   private element: HTMLDivElement;
   private popperBody!: HTMLDivElement;
   private popperIcon!: HTMLButtonElement;
@@ -82,6 +83,7 @@ export class PopperComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.isOpen = false;
+    this.closeEvent.emit(true);
     this.item.classList.remove("left-menu__item-popper-opened");
     setTimeout(() => {
       this.element.style.display = 'none';

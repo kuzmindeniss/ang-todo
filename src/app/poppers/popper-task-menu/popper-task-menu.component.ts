@@ -13,6 +13,7 @@ export class PopperTaskMenuComponent implements OnInit {
   @Input() item!: HTMLElement;
   @Input() task!: TaskInterface;
   @Output() deleteTaskEvent = new EventEmitter<TaskInterface>();
+  @Output() closeTaskEditingEvent = new EventEmitter<boolean>();
 
   constructor(
     public projectService: ProjectService
@@ -23,6 +24,10 @@ export class PopperTaskMenuComponent implements OnInit {
 
   deleteTask(task: TaskInterface) {
     this.deleteTaskEvent.emit(task);
+  }
+
+  closeTaskEditing(res: boolean) {
+    this.closeTaskEditingEvent.emit(res);
   }
 
 }

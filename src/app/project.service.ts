@@ -24,6 +24,8 @@ export class ProjectService {
   };
   tasksCache: { [key: string]: TaskInterface[] } = {};
   showCompletedTasks: boolean = false;
+  activeProjectId: string = "";
+  areProjectsLoading: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -49,16 +51,19 @@ export class ProjectService {
               id: projectDocument.id,
             };
           });
+          this.areProjectsLoading = false;
           this.projects$.next(this.projects);
         },
         error: error => {
           this.toastr.error(error);
           this.projects = [];
+          this.areProjectsLoading = false;
           this.projects$.next(this.projects);
         }
       });
     } else {
       this.projects = [];
+      this.areProjectsLoading = false;
       this.projects$.next(this.projects);
     }
   }

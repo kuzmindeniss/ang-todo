@@ -1,8 +1,3 @@
-.main-content-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
 .create-task-button {
     display: flex;
     width: 100%;
@@ -86,10 +81,6 @@
     }
 }
 
-.tasks__view-content {
-    flex-basis: 800px;
-}
-
 .tasks__header {
     display: flex;
     justify-content: space-between;
@@ -103,7 +94,7 @@
     position: relative;
     display: flex;
     flex-flow: row;
-    align-items: center;
+    align-items: stretch;
     margin-bottom: 12px;
     cursor: pointer;
     border-radius: 16px;
@@ -175,6 +166,7 @@
 
 .popper-icon {
     display: none;
+    padding: 0 12px;
     align-items: center;
     justify-content: center;
     outline: none;
@@ -189,7 +181,14 @@
     }
 }
 
-.tasks__item:hover .popper-icon {
+.tasks__item-content {
+    display: flex;
+    align-items: center;
+}
+
+.tasks__item:hover .popper-icon,
+.tasks__item--selected .popper-icon
+{
     display: flex;
 }
 

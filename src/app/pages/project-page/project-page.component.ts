@@ -20,6 +20,7 @@ export class ProjectPageComponent implements OnInit {
   isAddingNewTask: boolean = false;
   newTaskTitle: string = "";
   tasks: TaskInterface[] = [];
+  activeTaskId: string = "";
 
   constructor(
     private router: Router,
@@ -35,12 +36,22 @@ export class ProjectPageComponent implements OnInit {
   ngOnInit(): void {
     this.initProject();
     this.initProjectTasks();
+    setTimeout(() => {
+      this.projectService.activeProjectId = this.id;
+    }, 0)
+  }
+
+  ngOnDestroy(): void {
+    this.projectService.activeProjectId = "";
   }
 
   initProject() {
     this.projectService.projects$.subscribe({
       next: projects => {
         const newProject = projects?.find(el => el.id === this.id);
+        if (!newProject) {
+          this.router.navigate(['/']);
+        }
         if ( newProject && isEqual(newProject, this.project) ) return;
 
         this.project = projects?.find(el => el.id === this.id);

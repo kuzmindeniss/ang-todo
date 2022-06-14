@@ -1,1 +1,20 @@
-<p>home-page works!</p>
+<div class="main-content-wrapper">
+    <div class="view-content">
+        <loading-circle-svg *ngIf="projectService.areProjectsLoading"></loading-circle-svg>
+        <div class="projects" *ngIf="projectService.projects && projectService.projects.length else noProjects">
+            <h2>Your projects:</h2>
+            <ul class="projects__list">
+                <li class="projects__item" *ngFor="let project of projectService.projects">
+                    <a [routerLink]="['/project', project.id]" class="projects-list__item-title">{{ project.name }}</a>
+                </li>
+            </ul>
+        </div>
+        <ng-template #noProjects>
+            <ng-template [ngIf]="!projectService.areProjectsLoading">
+                <h2>You have no project</h2>
+                <button class="button create-project-button" (click)="modalService.open('create-project-modal');">Create project</button>
+            </ng-template>
+        </ng-template>
+
+    </div>
+</div>

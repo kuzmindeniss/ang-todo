@@ -2,9 +2,9 @@
     <a href="#" [routerLink]="'/'">Main</a>
     <section class="left-menu__list">
         <h2>Projects</h2>
-        <loading-circle-svg *ngIf="projectService.projects === undefined"></loading-circle-svg>
+        <loading-circle-svg *ngIf="projectService.areProjectsLoading"></loading-circle-svg>
         <ul>
-            <li *ngFor="let project of projectService.projects" #popperItem>
+            <li *ngFor="let project of projectService.projects" #popperItem class="left-menu__item" [ngClass]="{'left-menu__item--active': projectService.activeProjectId === project.id}">
                 <a href="#" [routerLink]="['/project', project.id]">
                     <div class="left-menu__item-color" [style.backgroundColor]="projectService.colors[project.color!]"></div>
                     {{ project.name }}

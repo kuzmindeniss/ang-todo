@@ -71,7 +71,7 @@
         margin-bottom: 12px;
     }
 
-    li {
+    .left-menu__item {
         display: flex;
         flex-flow: row;
         transition: background-color .1s, box-shadow .1s;
@@ -80,6 +80,15 @@
 
         &.left-menu__item-popper-opened {
             background-color: rgba(255, 255, 255, .2);
+
+            .popper-icon {
+                display: flex;
+            }
+        }
+
+        &--active {
+            background-color: rgba(255, 255, 255, .2);
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
 
             .popper-icon {
                 display: flex;

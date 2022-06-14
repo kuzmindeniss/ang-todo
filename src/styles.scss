@@ -71,6 +71,15 @@ ul {
         radial-gradient(at 82% 5%, hsla(318,68%,61%,1) 0px, transparent 50%);
 }
 
+.main-content-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.view-content {
+    flex-basis: 800px;
+}
+
 .right-wrapper {
     height: 1px;
     min-height: calc(100vh - 24px);

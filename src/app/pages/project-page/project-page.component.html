@@ -1,5 +1,5 @@
 <div class="main-content-wrapper">
-    <div class="tasks__view-content">
+    <div class="view-content">
         <loading-circle-svg *ngIf="projectService.projects === undefined"></loading-circle-svg>
 
         <ng-template [ngIf]="project && project.name">
@@ -19,7 +19,7 @@
             </div>
             <ul class="tasks__list">
                 <ng-container *ngFor="let task of tasks">
-                    <li #popperItem class="tasks__item" [ngClass]="{'tasks__item--completed': task.isCompleted}"
+                    <li #popperItem class="tasks__item" [ngClass]="{'tasks__item--completed': task.isCompleted, 'tasks__item--selected': activeTaskId === task.id}"
                         *ngIf="doShowTask(task)">
                         <button class="tasks__item-checkbox" (click)="completeTask(task)">
                             <div class="tasks__item-checkbox-circle">
@@ -32,14 +32,14 @@
                         </button>
                         <div class="tasks__item-content">{{ task.name }}</div>
 
-                        <button class="popper-icon" (click)="popperService.open('popper-task-' + task.id)">
+                        <button class="popper-icon" (click)="popperService.open('popper-task-' + task.id); activeTaskId = task.id">
                             <svg width="15" height="3">
                                 <path
                                     d="M1.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
                                     fill="currentColor" fill-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <popper-task-menu (deleteTaskEvent)="deleteTask($event)" [projectId]="id" [item]="popperItem" [task]="task" [id]="'popper-task-' + task.id"></popper-task-menu>
+                        <popper-task-menu (closeTaskEditingEvent)="activeTaskId = ''" (deleteTaskEvent)="deleteTask($event)" [projectId]="id" [item]="popperItem" [task]="task" [id]="'popper-task-' + task.id"></popper-task-menu>
                     </li>
                 </ng-container>
 
