@@ -110,11 +110,13 @@ export class ProjectPageComponent implements OnInit {
   onAddTask(title: string, description: string) {
     if (!this.isNewTaskTitleValid) return;
     this.projectService.createTask(title, description, this.id);
+    this.isAddingNewTask = false;
+    this.newTaskTitle = "";
     this.initProjectTasks();
   }
 
   get isNewTaskTitleValid(): boolean {
-    return this.newTaskTitle.trim().length ? true : false;
+    return !!this.newTaskTitle.trim().length;
   }
 
   doShowTask(task: TaskInterface) {

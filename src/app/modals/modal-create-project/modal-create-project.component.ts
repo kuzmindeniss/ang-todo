@@ -14,6 +14,10 @@ export class ModalCreateProjectComponent implements OnInit {
     public modalService: ModalService
   ) { }
 
+  enterPressed(): void {
+    this.projectService.createProject(this.projectService.newProjectName, this.projectService.newProjectColor)
+  }
+
   ngOnInit(): void {
   }
 

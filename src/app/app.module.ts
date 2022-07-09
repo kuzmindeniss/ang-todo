@@ -25,7 +25,7 @@ import { DropdownMenuDirective } from './dropdown-menu.directive';
 import { PopperModule } from './popper';
 import { PopperProjectMenuComponent } from './poppers/popper-project-menu/popper-project-menu.component';
 import { ModalEditProjectComponent } from './modals/modal-edit-project/modal-edit-project.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoadingCircleSvgComponent } from './svg-components/loading-circle-svg/loading-circle-svg.component';

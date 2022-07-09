@@ -1,6 +1,6 @@
 <jw-modal id="create-project-modal">
     <h2>Project creating</h2>
-    <label class="form-label">New project name <input class="input" trim="blur" type="text" [(ngModel)]="projectService.newProjectName"/></label>
+    <label class="form-label">New project name <input class="input" tabindex="1" (keyup.enter)="enterPressed()" trim="blur" type="text" [(ngModel)]="projectService.newProjectName"/></label>
 
     <div appDropdownMenu class="dropdown-menu">
         <div class="dropdown-menu__choosed">

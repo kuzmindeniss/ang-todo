@@ -1,0 +1,21 @@
+.sign-in-wrapper {
+  display: flex;
+  flex-flow: column;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.google-auth-svg-wrapper {
+  cursor: pointer;
+  transition: all .5s;
+  width: 150px;
+  height: 150px;
+
+  &:hover {
+    opacity: .8;
+  }
+}

@@ -58,12 +58,12 @@
                 <div class="creating-new-task__title-container">
                     <div class="creating-new-task__title-placeholder" *ngIf="!newTaskTitle.length">e.g. Buy gift
                         tomorrow at 6pm</div>
-                    <div class="creating-new-task__title" autofocus (input)="onChangeTaskTitle($event)" trim="blur"
+                    <div class="creating-new-task__title" autofocus (keyup.enter)="onAddTask(newTaskTitle, description.value)" (input)="onChangeTaskTitle($event)" trim="blur"
                         contenteditable spellcheck></div>
                 </div>
-                <textarea #descr class="creating-new-task__textarea" placeholder="Description"></textarea>
+                <textarea #description class="creating-new-task__textarea" placeholder="Description"></textarea>
                 <div class="creating-new-task__buttons">
-                    <button class="button" (click)="onAddTask(newTaskTitle, descr.value)"
+                    <button class="button" (click)="onAddTask(newTaskTitle, description.value)"
                         [disabled]="!isNewTaskTitleValid" [ngClass]="{'button--blocked' : !isNewTaskTitleValid}">Add
                         task</button>
                     <button class="button" (click)="isAddingNewTask = false; newTaskTitle = ''">Close</button>

@@ -37,7 +37,7 @@
         padding: 0;
         margin-bottom: 6px;
     }
-    
+
     .popper-icon {
         display: none;
         align-items: center;
@@ -48,11 +48,22 @@
         color: rgba(0, 0, 0, .4);
         transition: color .5s;
         cursor: pointer;
-    
+
         &:hover {
             color: #000;
         }
     }
+}
+
+.main-link {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 20px;
+  transition: all .5s;
+
+  &:hover {
+    opacity: .6;
+  }
 }
 
 .left-menu__item-color {

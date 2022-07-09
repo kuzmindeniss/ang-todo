@@ -42,6 +42,15 @@ export class AuthService {
     this.afAuth.signInWithPopup(new auth.GoogleAuthProvider)
       .then((result) => {
         this.setUserData(result.user);
+        console.log('logged');
+        const routerP = this.router.navigateByUrl('', {'skipLocationChange': true});
+        routerP.then(res => {
+          console.log('res');
+          console.log(res);
+        }).catch(err => {
+          console.log('err');
+          console.log(err);
+        })
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
